@@ -8,24 +8,29 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-  try {
-	  Class.forName("com.mysql.cj.jdbc.Driver");  
-	  Connection conn = DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_e64aed2083389e0",
-			   "bfeb87d5f03af0","ce5d6745");
-			  out.write("Connected!");
-	  Statement st = conn.createStatement();
-
-	  // note that i'm leaving "date_created" out of this insert statement
-	  st.executeUpdate("INSERT INTO myguests (firstname, lastname, email) "
-		          +"VALUES ('Juan', 'Soto', 'juansoto@gmail.com')");
-
-	  out.write("guest Juan inserted!");
-	  conn.close();
-  }
-  catch(SQLException e) {
-    out.println("SQLException caught: " +e.getMessage());
-  }
+<% 
+	
+	String first_name=request.getParameter("first_name");
+	String last_name=request.getParameter("last_name");
+	String email=request.getParameter("email");
+	
+	try{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		 Connection conn = DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_e64aed2083389e0",
+				   "bfeb87d5f03af0","ce5d6745");
+		out.write("Connected!");
+		
+		Statement st=conn.createStatement();
+		
+		int i=st.executeUpdate("INSERT INTO myguests(firstname, lastname, email) values('"+first_name+"','"+last_name+"','"+email+"')");
+		out.println("Data is successfully inserted!");
+		
+	}
+	catch(SQLException e){
+		out.println("SQL Exception caught: " + e.getMessage());
+	}
+	
+	
 %>
 </body>
 </html>
