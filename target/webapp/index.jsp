@@ -16,15 +16,17 @@
 	  
 	  out.write("Connected!");
 	  out.write("<br/>");
-	  
+	 
+	  //Reiniciar el puto eclipse
 	  String environment = System.getenv("Entorno");
 	  out.write("The environment is : "  + environment);
-
+	  
+	  out.write("<br/>");
 	  
 	  DatabaseConfiguration dc=new DatabaseConfiguration();
-	  out.write(dc.getPropValues());
+	  out.write(dc.getPropValues(environment));
   }
-  catch(SQLException e) {
+  catch(Exception e) {
     out.println("SQLException caught: " +e.getMessage());
   }
 %>

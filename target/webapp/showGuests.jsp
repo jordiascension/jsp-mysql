@@ -44,14 +44,16 @@
 			</tr>
 <% 
 	     }
-	     st.close();
-	     conn.close();
+	    rs.close();
+	    st.close();
+	    conn.close();
 	    }
 	    catch (Exception e)
 	    {
 	      System.err.println("Got an exception! ");
 	      System.err.println(e.getMessage());
-	    }	
+	    }
+	    
 %>
 </table>
 </body>
