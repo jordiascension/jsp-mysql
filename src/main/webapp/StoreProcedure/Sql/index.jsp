@@ -24,13 +24,12 @@
 				   "bfeb87d5f03af0","ce5d6745");
 		out.write("Connected!");
 		
-		String query = "SELECT * FROM myguests";
-
-	      // create the java statement
-	    Statement st = conn.createStatement();
-	      
+		CallableStatement cStmt = conn.prepareCall("{call obtenerProductosPorEstado(?)}");  
+		cStmt.setString(1, "disponible");
 	      // execute the query, and get a java resultset
-	    ResultSet resultSet = st.executeQuery(query);
+	    
+        cStmt.execute();    
+        final ResultSet resultSet = cStmt.getResultSet(); 
 	      
 	      // iterate through the java resultset
 	    while (resultSet.next())
@@ -38,17 +37,14 @@
 %>
 			<tr>
 			<td><%= resultSet.getInt("id") %></td>
-			<td><%= resultSet.getString("firstname") %></td>
-			<td><%= resultSet.getString("lastname") %></td>
-			<td><%= resultSet.getString("email") %></td>
-				<td><a href="<%= response.encodeURL(request.getContextPath() + "/updateGuest.jsp?id="+ resultSet.getInt("id")+"&firstname="+ 
-        resultSet.getString("firstname")+"&lastname="+ resultSet.getString("lastname")+"&email="+ resultSet.getString("email")) %>">Update</a></td>
-    	<td><a href="<%= response.encodeURL(request.getContextPath() + "/deleteGuests.jsp?id="+ resultSet.getInt("id"))%>">Delete</a></td>
+			<td><%= resultSet.getString("nombre") %></td>
+			<td><%= resultSet.getString("estado") %></td>
+			<td><%= resultSet.getDouble("precio") %></td>
 			</tr>
 <% 
 	     }
 	    resultSet.close();
-	    st.close();
+	    cStmt.close();
 	    conn.close();
 	    }
 	    catch (Exception e)

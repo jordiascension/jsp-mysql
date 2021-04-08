@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.webapp.configuration.DatabaseConfiguration"%>
+<%@ page import="com.webapp.configuration.DatabaseProperties"%>
 <html>
 <head>
 <title>JDBC Connection example</title>
@@ -10,11 +11,15 @@
 
 <%
   try {
+	  
+	  
 	  Class.forName("com.mysql.cj.jdbc.Driver");  
 	  Connection conn=DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_e64aed2083389e0",
 			   "bfeb87d5f03af0","ce5d6745");
 	  
-	  out.write("Connected!");
+      DatabaseProperties databaseProperties = DatabaseProperties.getInstancia();
+	  
+	  out.write(databaseProperties.getPropiedad("server") + " Connected!");
 	  out.write("<br/>");
 	 
 	  //Reiniciar el puto eclipse
