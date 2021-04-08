@@ -1,5 +1,6 @@
 <%@ page language='java' contentType='text/html;charset=iso-8859-1'%>
 <%@ page import="java.sql.*"%>
+<%@ page import="com.webapp.configuration.DatabaseProperties"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +20,11 @@
 </tr>
 <% 
 	try{
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		 Connection conn = DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_e64aed2083389e0",
-				   "bfeb87d5f03af0","ce5d6745");
+		DatabaseProperties databaseProperties = DatabaseProperties.getInstancia();
+	      
+	    Class.forName(databaseProperties.getDatabaseDriver());  
+		Connection conn=DriverManager.getConnection(databaseProperties.getConnectionString(),
+				  databaseProperties.getDatabaseUser(),databaseProperties.getDatabasePwd());
 		out.write("Connected!");
 		
 		String query = "SELECT * FROM myguests";

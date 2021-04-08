@@ -1,5 +1,4 @@
 <%@ page import="java.sql.*"%>
-<%@ page import="com.webapp.configuration.DatabaseConfiguration"%>
 <%@ page import="com.webapp.configuration.DatabaseProperties"%>
 <html>
 <head>
@@ -11,13 +10,12 @@
 
 <%
   try {
-	  
-	  
-	  Class.forName("com.mysql.cj.jdbc.Driver");  
-	  Connection conn=DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_e64aed2083389e0",
-			   "bfeb87d5f03af0","ce5d6745");
-	  
+	  	  
       DatabaseProperties databaseProperties = DatabaseProperties.getInstancia();
+      
+      Class.forName("com.mysql.cj.jdbc.Driver");  
+	  Connection conn=DriverManager.getConnection(databaseProperties.getConnectionString(),
+			  databaseProperties.getDatabaseUser(),databaseProperties.getDatabasePwd());
 	  
 	  out.write(databaseProperties.getPropiedad("server") + " Connected!");
 	  out.write("<br/>");
@@ -27,9 +25,7 @@
 	  out.write("The environment is : "  + environment);
 	  
 	  out.write("<br/>");
-	  
-	  DatabaseConfiguration dc=new DatabaseConfiguration();
-	  out.write(dc.getPropValues(environment));
+	
   }
   catch(Exception e) {
     out.println("SQLException caught: " +e.getMessage());

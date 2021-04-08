@@ -12,8 +12,11 @@ public class DatabaseProperties {
 
 		p = new Properties();
 		try {
+			String environment = System.getenv("Entorno");
+			String propFileName = environment + "-database.properties";
+
 			p.load(getClass().getClassLoader()
-					.getResourceAsStream("dev-database.properties"));
+					.getResourceAsStream(propFileName));
 		} catch (IOException e) {
 // TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,5 +35,26 @@ public class DatabaseProperties {
 	public String getPropiedad(String clave) {
 
 		return p.getProperty(clave);
+	}
+
+	public String getConnectionString() {
+
+		return "jdbc:mysql://" + p.getProperty("server") + "/"
+				+ p.getProperty("database");
+	}
+
+	public String getDatabaseUser() {
+
+		return p.getProperty("user");
+	}
+
+	public String getDatabasePwd() {
+
+		return p.getProperty("pwd");
+	}
+
+	public String getDatabaseDriver() {
+
+		return p.getProperty("mysql-driver");
 	}
 }
