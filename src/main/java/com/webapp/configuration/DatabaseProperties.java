@@ -6,16 +6,16 @@ import java.util.Properties;
 public class DatabaseProperties {
 
 	private static DatabaseProperties instancia = null;
-	private Properties p;
+	private Properties property;
 
 	private DatabaseProperties() {
 
-		p = new Properties();
+		property = new Properties();
 		try {
 			String environment = System.getenv("Entorno");
 			String propFileName = environment + "-database.properties";
 
-			p.load(getClass().getClassLoader()
+			property.load(getClass().getClassLoader()
 					.getResourceAsStream(propFileName));
 		} catch (IOException e) {
 // TODO Auto-generated catch block
@@ -34,27 +34,32 @@ public class DatabaseProperties {
 
 	public String getPropiedad(String clave) {
 
-		return p.getProperty(clave);
+		return property.getProperty(clave);
 	}
 
 	public String getConnectionString() {
 
-		return "jdbc:mysql://" + p.getProperty("server") + "/"
-				+ p.getProperty("database");
+		return "jdbc:mysql://" + property.getProperty("server") + "/"
+				+ property.getProperty("database");
 	}
 
 	public String getDatabaseUser() {
 
-		return p.getProperty("user");
+		return property.getProperty("user");
 	}
 
 	public String getDatabasePwd() {
 
-		return p.getProperty("pwd");
+		return property.getProperty("pwd");
 	}
 
 	public String getDatabaseDriver() {
 
-		return p.getProperty("mysql-driver");
+		return property.getProperty("mysql-driver");
+	}
+
+	public String getMongoDbConnectionString() {
+
+		return property.getProperty("mongodb-connectionstring");
 	}
 }
